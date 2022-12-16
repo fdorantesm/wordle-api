@@ -8,7 +8,9 @@ import { CreateMatchUseCase } from 'src/modules/matches/application/use-cases/cr
 import { MakeAttemptUseCase } from 'src/modules/matches/application/use-cases/make-attempt/make-attempt.use-case';
 import { Scope } from 'src/modules/users/domain/enums/scope.enum';
 import { MakeAttemptDto } from '../dtos/make-attempt.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Matches')
 @Controller({ version: '1', path: 'matches' })
 export class MatchesController {
   constructor(

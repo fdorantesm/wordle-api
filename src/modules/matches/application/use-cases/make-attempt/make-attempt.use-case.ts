@@ -4,6 +4,7 @@ import {
   Inject,
   Injectable,
   NotFoundException,
+  Logger,
 } from '@nestjs/common';
 import { EventBus } from '@nestjs/cqrs';
 
@@ -37,10 +38,12 @@ export class MakeAttemptUseCase implements UseCase {
     });
 
     if (!match) {
+      Logger.log('Match not found', MakeAttemptUseCase.name);
       throw new NotFoundException('match.not_found');
     }
 
     if (match.endingStatus) {
+      Logger.log('Match finished', MakeAttemptUseCase.name);
       throw new ConflictException('match.finished');
     }
 
