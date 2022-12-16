@@ -123,6 +123,7 @@
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
+      "^src/(.*)": "<rootDir>/src/$1",
       "^@app/common(|/.*)$": "<rootDir>/libs/common/src/$1",
       "^@plugins/mongoose-hide-object-id(|/.*)$": "<rootDir>/libs/mongoose-hide-object-id/src/$1",
       "^@app/id-generator(|/.*)$": "<rootDir>/libs/id-generator/src/$1"

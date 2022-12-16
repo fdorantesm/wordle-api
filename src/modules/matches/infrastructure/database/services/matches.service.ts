@@ -1,15 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
-import { MatchesRepository } from '../repositories/matches.repository';
 import { MatchEntity } from 'src/modules/matches/domain/entities/match.entity';
 import { CrudRepository } from 'src/core/utils/crud-repository.interface';
 import { BestPlayersType } from 'src/modules/tops/domain/types/best-players.type';
-import { MostGuessedWordsResultItem } from 'src/modules/matches/domain/types/most-guessed-words-result.type';
 import { MostGuessedWords } from 'src/modules/matches/domain/types/most-guessed-words.type';
+import { MatchesRepository } from '../interfaces/matches-repository.interface';
 
 @Injectable()
 export class MatchesService implements CrudRepository<MatchEntity> {
-  constructor(private readonly matchesRepository: MatchesRepository) {}
+  constructor(
+    @Inject('MatchesRepository')
+    private readonly matchesRepository: MatchesRepository,
+  ) {}
 
   public create(data: MatchEntity): MatchEntity | Promise<MatchEntity> {
     return this.matchesRepository.create(data);

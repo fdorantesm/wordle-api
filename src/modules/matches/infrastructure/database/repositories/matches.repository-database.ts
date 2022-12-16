@@ -12,9 +12,12 @@ import { BestPlayer } from 'src/modules/tops/domain/types/best-player.type';
 import { EndingStatus } from 'src/modules/matches/domain/enums/ending-status.enum';
 import { MostGuessedWordsResultItem } from 'src/modules/matches/domain/types/most-guessed-words-result.type';
 import { MostGuessedWords } from 'src/modules/matches/domain/types/most-guessed-words.type';
+import { MatchesRepository } from '../interfaces/matches-repository.interface';
 
 @Injectable()
-export class MatchesRepository implements CrudRepository<MatchEntity> {
+export class MatchesRepositoryDatabase
+  implements CrudRepository<MatchEntity>, MatchesRepository
+{
   constructor(
     @InjectModel(MatchModel.name)
     private readonly matchModel: Model<MatchModel>,

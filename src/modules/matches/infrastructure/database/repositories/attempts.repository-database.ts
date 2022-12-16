@@ -4,9 +4,10 @@ import { Model } from 'mongoose';
 
 import { AttemptModel } from '../models/attempt.model';
 import { AttemptEntity } from 'src/modules/matches/domain/entities/attempt.entity';
+import { AttemptsRepository } from '../interfaces/attemps-repository.interface';
 
 @Injectable()
-export class AttemptsRepository {
+export class AttemptsRepositoryDatabase implements AttemptsRepository {
   constructor(
     @InjectModel(AttemptModel.name)
     public readonly attemptModel: Model<AttemptModel>,

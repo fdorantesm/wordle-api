@@ -1,11 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { AttemptEntity } from 'src/modules/matches/domain/entities/attempt.entity';
-import { AttemptsRepository } from '../repositories/attempts.repository';
+import { AttemptsRepository } from '../interfaces/attemps-repository.interface';
 
 @Injectable()
 export class AttemptsService {
-  constructor(private readonly attemptsRepository: AttemptsRepository) {}
+  constructor(
+    @Inject('AttemptsRepository')
+    private readonly attemptsRepository: AttemptsRepository,
+  ) {}
 
   public create(data: AttemptEntity): Promise<AttemptEntity> {
     return this.attemptsRepository.create(data);

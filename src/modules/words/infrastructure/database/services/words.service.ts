@@ -1,10 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+
 import { WordEntity } from 'src/modules/words/domain/entities/word.entity';
-import { WordsRepository } from '../repositories/words.repository';
+import { WordsRepository } from '../interfaces/word-repository.interface';
 
 @Injectable()
 export class WordsService {
-  constructor(private readonly wordsRepository: WordsRepository) {}
+  constructor(
+    @Inject('WordsRepository')
+    private readonly wordsRepository: WordsRepository,
+  ) {}
 
   public findRandom(size?: number): Promise<WordEntity> {
     return this.wordsRepository.findRandom(size);

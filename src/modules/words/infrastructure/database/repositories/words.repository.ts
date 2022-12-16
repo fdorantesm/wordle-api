@@ -5,9 +5,10 @@ import * as first from 'lodash/first';
 
 import { WordModel } from '../models/word.model';
 import { WordEntity } from 'src/modules/words/domain/entities/word.entity';
+import { WordsRepository } from '../interfaces/word-repository.interface';
 
 @Injectable()
-export class WordsRepository {
+export class WordsRepositoryDatabase implements WordsRepository {
   constructor(
     @InjectModel(WordModel.name) private readonly wordModel: Model<WordModel>,
   ) {}
