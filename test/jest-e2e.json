@@ -11,10 +11,7 @@
     "^.+\\.(t|j)s$": "ts-jest"
   },
   "moduleNameMapper": {
-    "@app/favorites/(.*)": "<rootDir>/../libs/favorites/src/$1",
-    "@app/favorites": "<rootDir>/../libs/favorites/src",
-    "@app/common/(.*)": "<rootDir>/../libs/common/src/$1",
-    "@app/common": "<rootDir>/../libs/common/src",
+    "^src/(.*)": "<rootDir>/../src/$1",
     "@app/mongoose-hide-object-id/(.*)": "<rootDir>/../libs/mongoose-hide-object-id/src/$1",
     "@app/mongoose-hide-object-id": "<rootDir>/../libs/mongoose-hide-object-id/src",
     "@plugins/mongoose-hide-object-id/(.*)": "<rootDir>/../libs/mongoose-hide-object-id/src/$1",
