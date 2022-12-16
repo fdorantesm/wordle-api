@@ -1,10 +1,24 @@
+import { Test, TestingModule } from '@nestjs/testing';
+
 import { DateService } from './date.service';
 
 describe('DateService', () => {
-  const dateService = new DateService();
+  let service: DateService;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [DateService],
+    }).compile();
+
+    service = module.get<DateService>(DateService);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
 
   it('Create Date time object', () => {
-    const now = dateService.create();
+    const now = service.create();
     const now2 = new Date();
     expect(now.toDateString()).toBe(now2.toDateString());
   });
@@ -12,20 +26,20 @@ describe('DateService', () => {
   it('Create Date time christmas object', () => {
     const christmas = '2022-12-25T00:00:00';
     const christmasDate = new Date(christmas);
-    const christmasDateTime = dateService.create(new Date(christmas));
+    const christmasDateTime = service.create(new Date(christmas));
     expect(christmasDate.toDateString()).toBe(christmasDateTime.toDateString());
   });
 
   it('Create Date range pair', () => {
     const minutes = 5;
-    const { from, to } = dateService.withinRange(minutes, 'minutes');
+    const { from, to } = service.withinRange(minutes, 'minutes');
     expect(to.getMinutes() - from.getMinutes()).toBe(minutes);
   });
 
   it('Add 1 day to date object', () => {
     const day = 1;
-    const now = dateService.create();
-    const future = dateService.in(day, 'day');
+    const now = service.create();
+    const future = service.in(day, 'day');
     expect(future.getDate() - now.getDate()).toBe(day);
   });
 });
