@@ -38,7 +38,7 @@ async function bootstrap() {
   );
 
   const documentBuilder = new DocumentBuilder()
-    .setTitle('Healthy')
+    .setTitle('API Docs')
     .setDescription('API Reference')
     .addBearerAuth()
     .build();

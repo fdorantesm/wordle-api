@@ -1,5 +1,5 @@
 import { ID_GENERATOR_SERVICE, IdGeneratorService } from '@app/id-generator';
-import { Inject, Injectable } from '@nestjs/common';
+import { Logger, Inject, Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 
 import { UseCase } from 'libs/domain/src';
@@ -43,6 +43,11 @@ export class CreateMatchUseCase implements UseCase {
         expiresAt,
         intents: 0,
       }),
+    );
+
+    Logger.log(
+      `Match created: ${match.uuid} | ${match.word}`,
+      CreateMatchUseCase.name,
     );
 
     return this.responsePartialEntity(match);
