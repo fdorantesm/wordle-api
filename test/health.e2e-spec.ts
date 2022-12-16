@@ -4,7 +4,7 @@ import * as request from 'supertest';
 
 import { AppModule } from 'src/modules/app/app.module';
 
-describe('AppController (e2e)', () => {
+describe('HealthController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
