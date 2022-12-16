@@ -24,20 +24,7 @@ export class UserModel extends Document {
   @Prop({ type: Object })
   public profile?: {
     name: string;
-    phone: string;
-    age: number;
-    weight: number;
-    height: number;
-    city: string;
-    instagram: string;
-    facebook: string;
-    supplements: string;
-    ailments: string;
-    origin: string;
-    exercise: string;
-    food: string;
-    modality: string;
-    sex: string;
+    nick: string;
   };
 }
 

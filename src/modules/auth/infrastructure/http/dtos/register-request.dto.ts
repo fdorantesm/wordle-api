@@ -1,7 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { IsEmail, IsOptional, IsString, ValidateNested } from 'class-validator';
-import { RegisterProfile } from './register-profile.dto';
+import { IsEmail, IsOptional, IsString } from 'class-validator';
 
 export class RegisterRequestDto {
   @ApiProperty({ example: 'someone@email.local' })
@@ -14,8 +12,11 @@ export class RegisterRequestDto {
   @IsOptional()
   public password: string;
 
-  @ApiProperty()
-  @Type(() => RegisterProfile)
-  @ValidateNested()
-  public profile: RegisterProfile;
+  @ApiProperty({ example: 'Luis Hernández' })
+  @IsString()
+  public name: string;
+
+  @ApiProperty({ example: 'LuxoMasterMan43XDDD' })
+  @IsString()
+  public nick: string;
 }

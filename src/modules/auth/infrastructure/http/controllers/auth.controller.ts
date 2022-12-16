@@ -14,6 +14,7 @@ import {
   Res,
 } from '@nestjs/common';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiResponse,
   ApiSecurity,
@@ -43,7 +44,6 @@ export class AuthController {
     private readonly configService: ConfigService,
   ) {}
 
-  @ApiSecurity('Authorization')
   @ApiBody({
     description: 'Get a signed web token to make protected requests',
     type: LoginRequestDto,
@@ -73,7 +73,6 @@ export class AuthController {
     return token;
   }
 
-  @ApiSecurity('Authorization')
   @ApiBody({
     description: 'Register an administrator at first time',
     type: RegisterRequestDto,
@@ -98,12 +97,18 @@ export class AuthController {
     const token = await this.registerUseCase.exec(
       credentials.email,
       credentials.password,
-      credentials.profile,
+      credentials.name,
+      credentials.nick,
     );
 
     return token;
   }
 
+  @ApiBearerAuth()
+  @ApiUnauthorizedResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Invalid or expired token',
+  })
   @UseGuards(JwtGuard)
   @Get('/me')
   public async me(@Req() request: UserRequest) {
