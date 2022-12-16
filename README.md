@@ -36,12 +36,13 @@ $ npm run test:cov
 
 ### References
 
-|         |                                                            |
-|---------|------------------------------------------------------------|
-| API     | https://wordle-api-v52u.onrender.com                       |
-| Swagger | https://wordle-api-v52u.onrender.com/docs                  |
+|         |                                           |
+| ------- | ----------------------------------------- |
+| API     | https://wordle-api-v52u.onrender.com      |
+| Swagger | https://wordle-api-v52u.onrender.com/docs |
 
 ### MongoDB Container
+
 ```bash
 docker run -d -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=secret -v /Users/$USER/.mongodb5:/data --name mongodb mongo:5
 ```
