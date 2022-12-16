@@ -1,0 +1,44 @@
+image: node:16-alpine
+
+options:
+  docker: true
+  size: 2x
+
+clone:
+  depth: full # SonarCloud scanner needs the full history to assign issues properly
+
+definitions:
+  services:
+    docker:
+      memory: 4096
+  caches:
+    sonar: ~/.sonar/cache # Caching SonarCloud artifacts will speed up your build
+  steps:
+    - step: &provisioning-development-environment
+        name: "Provisioning development environment"
+        caches:
+          - node
+        script:
+          - yarn install
+    - step: &lint-test
+        name: "Lint test"
+        caches:
+          - node
+        script:
+          - yarn install
+          - yarn lint
+    - step: &unit-test
+        name: "Unit test"
+        caches:
+          - node
+        script:
+          - yarn install
+          - yarn test
+
+pipelines:
+  pull-requests:
+    "**":
+      - step: *provisioning-development-environment
+      - parallel:
+          - step: *lint-test
+          - step: *unit-test
