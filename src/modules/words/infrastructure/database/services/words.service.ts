@@ -6,7 +6,7 @@ import { WordsRepository } from '../repositories/words.repository';
 export class WordsService {
   constructor(private readonly wordsRepository: WordsRepository) {}
 
-  public findRandom(): Promise<WordEntity> {
-    return this.wordsRepository.findRandom();
+  public findRandom(size?: number): Promise<WordEntity> {
+    return this.wordsRepository.findRandom(size);
   }
 }

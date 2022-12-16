@@ -1,4 +1,4 @@
 export enum Scope {
-  RAFFLES = 'raffles',
+  MATCHES = 'matches',
   ROOT = 'root',
 }

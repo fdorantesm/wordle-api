@@ -21,7 +21,7 @@ export class DateService {
   public create(date?: Date): Date {
     const instance = (
       date ? DateTime.fromJSDate(date) : DateTime.now()
-    ).setZone(this.tz);
+    ).toUTC();
 
     return instance.toJSDate();
   }
@@ -36,10 +36,23 @@ export class DateService {
     const dates = Array.from(Array(amount).keys()).map((times) =>
       datetime
         .plus({ [unit]: times + 1 })
-        .setZone(this.tz)
+        .toUTC()
         .toJSDate(),
     );
 
     return dates;
+  }
+
+  public withinRange(value: number, unit: string): { from: Date; to: Date } {
+    const from = this.create();
+    const to = DateTime.fromJSDate(this.create())
+      .plus({ [unit]: value })
+      .toJSDate();
+    return { from, to };
+  }
+
+  public in(value: number, unit: string): Date {
+    const now = DateTime.fromJSDate(this.create());
+    return now.plus({ [unit]: value }).toJSDate();
   }
 }

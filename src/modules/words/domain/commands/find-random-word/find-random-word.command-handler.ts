@@ -8,7 +8,7 @@ export class FindRandomWordCommandHandler
   implements ICommandHandler<FindRandomWordCommand>
 {
   constructor(private readonly useCase: FindRandomWordUseCase) {}
-  public async execute(_command: FindRandomWordCommand): Promise<WordEntity> {
-    return this.useCase.run();
+  public async execute(command: FindRandomWordCommand): Promise<WordEntity> {
+    return this.useCase.run(command.size);
   }
 }

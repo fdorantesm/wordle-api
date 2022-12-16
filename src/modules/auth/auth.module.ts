@@ -10,12 +10,12 @@ import { UsersModule } from '../users/users.module';
 import { tokenConfigLoader } from './application/config/loaders/token.config-loader';
 import { TokenService } from './application/services/token.service';
 import { RegisterUseCase } from './application/use-cases/register.use-case';
-import { JwtStrategy } from './infrastructure/passport/jwt/jwt.strategy';
+import { JwtStrategy } from './infrastructure/http/passport/jwt/jwt.strategy';
 import { JwtGuard } from './application/guards/jwt.guard';
 import { ValidateBackofficeTokenUseCase } from './application/use-cases/validate-backoffice-token.use-case';
 import { JwtConfiguration } from '@app/common/types/jwt/jwt.configuration';
 import { MeUseCase } from './application/use-cases/me-use-case';
-import { CookieStrategy } from './infrastructure/passport/cookie/cookie.strategy';
+import { CookieStrategy } from './infrastructure/http/passport/cookie/cookie.strategy';
 import { CookieGuard } from './application/guards/cookie.guard';
 import { SharedModule } from '../shared/shared.module';
 
