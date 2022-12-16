@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { UsersModule } from '../users/users.module';
 import { WordsModule } from '../words/words.module';
 import { MatchesModule } from '../matches/matches.module';
+import { UserModule } from '../user/user.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { MatchesModule } from '../matches/matches.module';
     UsersModule,
     WordsModule,
     MatchesModule,
+    UserModule,
   ],
 })
 export class AppModule {}

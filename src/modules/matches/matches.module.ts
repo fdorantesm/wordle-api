@@ -14,6 +14,7 @@ import { AttemptModelInstance } from './infrastructure/database/models/attempt.m
 import { AttemptsRepository } from './infrastructure/database/repositories/attempts.repository';
 import { AttemptsService } from './infrastructure/database/services/attempts.service';
 import { EventHandlers } from './domain/events';
+import { CommandHandlers } from './domain/commands';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { EventHandlers } from './domain/events';
     SharedModule,
   ],
   providers: [
+    ...CommandHandlers,
     ...EventHandlers,
     MatchesRepository,
     AttemptsRepository,
