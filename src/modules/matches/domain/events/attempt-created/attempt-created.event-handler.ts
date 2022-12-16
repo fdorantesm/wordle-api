@@ -23,7 +23,7 @@ export class AttemptCreatedEventHandler
     };
 
     if (lastAttempt && !wordMatches) {
-      payload.endingStatus = EndingStatus.LOSE;
+      payload.endingStatus = EndingStatus.LOST;
     }
 
     if (wordMatches) {
