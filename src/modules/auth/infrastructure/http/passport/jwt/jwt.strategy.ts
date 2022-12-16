@@ -3,7 +3,7 @@ import { PassportStrategy, AbstractStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
-import { TokenPayloadDto } from './../../../application/dtos/token-payload.dto';
+import { TokenPayloadDto } from '../../../../application/dtos/token-payload.dto';
 
 @Injectable()
 export class JwtStrategy

@@ -20,7 +20,7 @@ export class RegisterUseCase {
     profile?: ProfileEntity,
   ): Promise<{ user: UserEntity } & TokenDto> {
     const isNotFirst = await this.usersService.findOne({});
-    const subscriber = [Scope.RAFFLES];
+    const subscriber = [Scope.MATCHES];
     const scopes = isNotFirst ? subscriber : [Scope.ROOT, ...subscriber];
 
     const formatedEmail = email.toLowerCase();

@@ -2,8 +2,8 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-cookie';
 
-import { TokenService } from './../../../application/services/token.service';
-import { UsersService } from './../../../../users/infrastructure/database/services/users.service';
+import { TokenService } from '../../../../application/services/token.service';
+import { UsersService } from '../../../../../users/infrastructure/database/services/users.service';
 
 @Injectable()
 export class CookieStrategy extends PassportStrategy(Strategy) {

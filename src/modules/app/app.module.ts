@@ -6,6 +6,7 @@ import { HealthModule } from '../health/health.module';
 import { SharedModule } from '../shared/shared.module';
 import { UsersModule } from '../users/users.module';
 import { WordsModule } from '../words/words.module';
+import { MatchesModule } from '../matches/matches.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { WordsModule } from '../words/words.module';
     AuthModule,
     UsersModule,
     WordsModule,
+    MatchesModule,
   ],
 })
 export class AppModule {}

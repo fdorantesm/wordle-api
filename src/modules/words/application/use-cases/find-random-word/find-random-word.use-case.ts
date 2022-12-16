@@ -7,8 +7,8 @@ import { WordsService } from 'src/modules/words/infrastructure/database/services
 @Injectable()
 export class FindRandomWordUseCase implements UseCase {
   constructor(private readonly wordsService: WordsService) {}
-  public async run(): Promise<WordEntity> {
-    const word = this.wordsService.findRandom();
+  public async run(size?: number): Promise<WordEntity> {
+    const word = this.wordsService.findRandom(size);
     return word;
   }
 }

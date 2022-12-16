@@ -10,7 +10,7 @@ import * as mongoosePaginate from 'mongoose-paginate';
 import { mongooseHideObjectId } from '@plugins/mongoose-hide-object-id';
 import { DatabaseConnection } from '@app/common';
 
-mongoose.set('debug', true);
+mongoose.set('debug', !true);
 
 @Injectable()
 export class MongooseFactory implements MongooseOptionsFactory {

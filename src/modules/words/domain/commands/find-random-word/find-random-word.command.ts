@@ -1,5 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
 
 export class FindRandomWordCommand implements ICommand {
-  constructor() {}
+  constructor(public size?: number) {}
 }
