@@ -1,9 +1,12 @@
 import { UserRequest } from '@app/common/types/http/user-request.type';
 import { Controller, Get, HttpStatus, Req, UseGuards } from '@nestjs/common';
 import {
+  ApiBearerAuth,
+  ApiOperation,
   ApiResponse,
   ApiTags,
   ApiTooManyRequestsResponse,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { Scopes } from 'src/modules/auth/application/decorators/scopes.decorator';
 import { JwtGuard } from 'src/modules/auth/application/guards/jwt.guard';
@@ -20,9 +23,15 @@ export class MeController {
     private readonly getPlayedMatchesUseCase: GetPlayedMatchesUseCase,
   ) {}
 
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get my matches' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Returns gaming score',
+  })
+  @ApiUnauthorizedResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Invalid or expired token',
   })
   @ApiTooManyRequestsResponse({
     status: HttpStatus.TOO_MANY_REQUESTS,

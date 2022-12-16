@@ -1,5 +1,6 @@
 import { Controller, Get, HttpStatus, VERSION_NEUTRAL } from '@nestjs/common';
 import {
+  ApiOperation,
   ApiResponse,
   ApiTags,
   ApiTooManyRequestsResponse,
@@ -15,6 +16,7 @@ import { HealthService } from '../../application/services/health.service';
 export class HealthController {
   constructor(private readonly healthService: HealthService) {}
 
+  @ApiOperation({ summary: 'Health check' })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'API is up',

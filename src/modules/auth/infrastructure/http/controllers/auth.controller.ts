@@ -1,7 +1,6 @@
 import { JwtGuard } from './../../../application/guards/jwt.guard';
 import { ConfigService } from '@nestjs/config';
-import { CookieGuard } from './../../../application/guards/cookie.guard';
-import * as cookie from 'cookie';
+
 import {
   Body,
   Controller,
@@ -16,8 +15,8 @@ import {
 import {
   ApiBearerAuth,
   ApiBody,
+  ApiOperation,
   ApiResponse,
-  ApiSecurity,
   ApiTags,
   ApiTooManyRequestsResponse,
   ApiUnauthorizedResponse,
@@ -44,6 +43,7 @@ export class AuthController {
     private readonly configService: ConfigService,
   ) {}
 
+  @ApiOperation({ summary: 'Sign in with an account' })
   @ApiBody({
     description: 'Get a signed web token to make protected requests',
     type: LoginRequestDto,
@@ -73,6 +73,7 @@ export class AuthController {
     return token;
   }
 
+  @ApiOperation({ summary: 'Register an account' })
   @ApiBody({
     description: 'Register an administrator at first time',
     type: RegisterRequestDto,
@@ -105,9 +106,14 @@ export class AuthController {
   }
 
   @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get user data' })
   @ApiUnauthorizedResponse({
     status: HttpStatus.UNAUTHORIZED,
     description: 'Invalid or expired token',
+  })
+  @ApiTooManyRequestsResponse({
+    status: HttpStatus.TOO_MANY_REQUESTS,
+    description: 'Too many requests in a short time',
   })
   @UseGuards(JwtGuard)
   @Get('/me')
