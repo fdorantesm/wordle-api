@@ -1,16 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import * as fs from 'fs';
-import * as path from 'path';
-import { CommandBus } from '@nestjs/cqrs';
 import { Scope } from 'src/modules/users/domain/enums/scope.enum';
-import { DateTime } from 'luxon';
-import * as capitalize from 'lodash/capitalize';
-import { ConfigService } from '@nestjs/config';
-import { HttpServerConfiguration } from '@app/common';
 
-import { TemplateService } from './../../../shared/services/template.service';
-import { EmailService } from './../../../shared/services/email.service';
-import { ShortIdService } from './../../../shared/services/short-id.service';
 import { ProfileEntity } from './../../../users/domain/entities/profile.entity';
 import { TokenDto } from './../dtos/token.dto';
 import { UserEntity } from './../../../users/domain/entities/user.entity';
