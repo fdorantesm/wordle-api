@@ -47,6 +47,12 @@ $ npm run test:cov
 docker run -d -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=secret -v /Users/$USER/.mongodb5:/data --name mongodb mongo:5
 ```
 
+### Dictionary
+
+```bash
+mongo < src/words.js
+```
+
 ### Envpack
 
 [📦 Envpack](https://www.npmjs.com/package/envpack) an utility to pack and unpack dotenv files.
