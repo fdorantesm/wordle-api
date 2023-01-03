@@ -15,8 +15,6 @@ import { JwtGuard } from './application/guards/jwt.guard';
 import { ValidateBackofficeTokenUseCase } from './application/use-cases/validate-backoffice-token.use-case';
 import { JwtConfiguration } from '@app/common/types/jwt/jwt.configuration';
 import { MeUseCase } from './application/use-cases/me-use-case';
-import { CookieStrategy } from './infrastructure/http/passport/cookie/cookie.strategy';
-import { CookieGuard } from './application/guards/cookie.guard';
 import { SharedModule } from '../shared/shared.module';
 
 @Module({
@@ -36,7 +34,6 @@ import { SharedModule } from '../shared/shared.module';
       },
     }),
     SharedModule,
-    UsersModule,
     IdGeneratorModule,
   ],
   providers: [
@@ -44,8 +41,6 @@ import { SharedModule } from '../shared/shared.module';
     LoginUseCase,
     RegisterUseCase,
     JwtStrategy,
-    CookieGuard,
-    CookieStrategy,
     JwtGuard,
     ValidateBackofficeTokenUseCase,
     MeUseCase,

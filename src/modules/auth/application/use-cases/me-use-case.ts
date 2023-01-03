@@ -1,14 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
+import { FindUserCommand } from 'src/modules/users/domain/commands';
 
 import { UserEntity } from './../../../users/domain/entities/user.entity';
-import { UsersService } from './../../../users/infrastructure/database/services/users.service';
 
 @Injectable()
 export class MeUseCase {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly commandBus: CommandBus) {}
 
   public async exec(userId: string): Promise<UserEntity> {
-    const user = await this.usersService.findById(userId);
+    const user = await this.commandBus.execute<FindUserCommand, UserEntity>(
+      new FindUserCommand({ uuid: userId }),
+    );
+    console.log({ user });
     return user;
   }
 }
