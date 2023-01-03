@@ -5,10 +5,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { JwtConfiguration } from '@app/common/types/jwt/jwt.configuration';
 
-import { AuthModule } from 'src/modules/auth/auth.module';
 import { tokenConfigLoader } from 'src/modules/auth/application/config/loaders/token.config-loader';
 import { JwtStrategy } from 'src/modules/auth/infrastructure/http/passport/jwt/jwt.strategy';
-import { CoreModule } from 'src/core/core.module';
+import { AuthModule } from 'src/modules/auth/auth.module';
 
 describe('AuthController (e2e)', () => {
   let app: INestApplication;
@@ -16,7 +15,6 @@ describe('AuthController (e2e)', () => {
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [
-        CoreModule,
         AuthModule,
         JwtModule.registerAsync({
           imports: [ConfigModule.forFeature(tokenConfigLoader)],

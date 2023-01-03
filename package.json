@@ -93,6 +93,8 @@
     "eslint-plugin-prettier": "^4.0.0",
     "husky": "^7.0.4",
     "jest": "^27.2.5",
+    "mongodb-memory-server": "^8.10.2",
+    "mongodb-memory-server-core": "^8.10.2",
     "prettier": "^2.3.2",
     "source-map-support": "^0.5.20",
     "supertest": "^6.1.3",
