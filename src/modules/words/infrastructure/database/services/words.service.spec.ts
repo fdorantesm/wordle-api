@@ -26,6 +26,7 @@ describe('WordsService', () => {
 
   it('should get random word', async () => {
     const { word } = await service.findRandom(5);
+    console.log({ word });
     expect(word).toBeTruthy();
     expect(word.length).toBe(5);
   });
