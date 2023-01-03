@@ -10,7 +10,7 @@ export class WordsRepositoryMemory implements WordsRepository {
     return Promise.resolve(
       WordEntity.create({
         uuid: '8923e6d4-e36d-4b40-9f1e-68d13a6fb5c6',
-        word: sample(['cosas', 'casos', 'moscas', 'perro']),
+        word: sample(['cosas', 'casos', 'mosca', 'perro']),
       }),
     );
   }
