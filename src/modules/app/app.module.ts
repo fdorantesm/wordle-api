@@ -9,10 +9,12 @@ import { WordsModule } from '../words/words.module';
 import { TopsModule } from '../tops/tops.module';
 import { MatchesModule } from '../matches/matches.module';
 import { UserModule } from '../user/user.module';
+import { DatabaseModule } from 'src/database/database.module';
 
 @Module({
   imports: [
     CoreModule,
+    DatabaseModule,
     SharedModule,
     HealthModule,
     AuthModule,

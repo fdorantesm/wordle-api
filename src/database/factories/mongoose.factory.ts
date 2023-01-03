@@ -6,9 +6,8 @@ import {
 } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 import { ConnectionString } from 'connection-string';
-import * as mongoosePaginate from 'mongoose-paginate';
-import { mongooseHideObjectId } from '@plugins/mongoose-hide-object-id';
 import { DatabaseConnection } from '@app/common';
+import { MongooseConnectionFactory } from './mongoose-connection.factory';
 
 mongoose.set('debug', !true);
 
@@ -32,13 +31,7 @@ export class MongooseFactory implements MongooseOptionsFactory {
       uri,
       dbName: this.config.database,
       useNewUrlParser: true,
-      connectionFactory: async (
-        connection: mongoose.Connection,
-      ): Promise<mongoose.Connection> => {
-        connection.plugin(mongooseHideObjectId);
-        connection.plugin(mongoosePaginate);
-        return connection;
-      },
+      connectionFactory: MongooseConnectionFactory.createForInstance,
     };
   }
 }
