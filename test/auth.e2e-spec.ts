@@ -1,56 +1,72 @@
-import { JwtModule } from '@nestjs/jwt';
 import * as request from 'supertest';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus, INestApplication } from '@nestjs/common';
-import { JwtConfiguration } from '@app/common/types/jwt/jwt.configuration';
+import { MongoMemoryServer } from 'mongodb-memory-server';
 
-import { tokenConfigLoader } from 'src/modules/auth/application/config/loaders/token.config-loader';
-import { JwtStrategy } from 'src/modules/auth/infrastructure/http/passport/jwt/jwt.strategy';
 import { AuthModule } from 'src/modules/auth/auth.module';
+import { UsersModule } from 'src/modules/users/users.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import { UsersService } from 'src/modules/users/infrastructure/database/services/users.service';
+import { Scope } from 'src/modules/users/domain/enums/scope.enum';
+import { CoreModule } from 'src/core/core.module';
+import { MongooseMemoryFactory } from 'src/database/factories/mongoose-memory.factory';
 
 describe('AuthController (e2e)', () => {
   let app: INestApplication;
+  let usersService: UsersService;
+
+  const rootUser = {
+    email: 'root@email.local',
+    password: 'sesame',
+    scopes: [Scope.ROOT],
+    nick: 'root',
+    name: 'Root',
+  };
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [
+        CoreModule,
         AuthModule,
-        JwtModule.registerAsync({
-          imports: [ConfigModule.forFeature(tokenConfigLoader)],
-          inject: [ConfigService],
-          useFactory(configService: ConfigService) {
-            const config = configService.get<JwtConfiguration>('jwt');
-            return {
-              secret: config.secret,
-              signOptions: {
-                expiresIn: config.expires,
-              },
-            };
-          },
+        UsersModule,
+        MongooseModule.forRootAsync({
+          useClass: MongooseMemoryFactory,
         }),
       ],
-      providers: [JwtStrategy],
     }).compile();
 
     app = moduleFixture.createNestApplication();
     await app.init();
+
+    usersService = app.get(UsersService);
   });
 
   it('GET /auth/login', async () => {
+    await usersService.register(
+      rootUser.email,
+      rootUser.password,
+      rootUser.scopes,
+    );
+
     return request(app.getHttpServer())
       .post('/auth/login')
       .send({
-        email: 'root@email.local',
-        password: 'sesame',
+        email: rootUser.email,
+        password: rootUser.password,
       })
       .expect(HttpStatus.CREATED);
   });
 
   it('GET /auth/me', async () => {
+    await usersService.register(
+      rootUser.email,
+      rootUser.password,
+      rootUser.scopes,
+    );
+
     const login = await request(app.getHttpServer()).post('/auth/login').send({
-      email: 'root@email.local',
-      password: 'sesame',
+      email: rootUser.email,
+      password: rootUser.password,
     });
 
     const me = await request(app.getHttpServer())
@@ -60,15 +76,15 @@ describe('AuthController (e2e)', () => {
     expect(me.statusCode).toBe(HttpStatus.OK);
   });
 
-  //   it('GET /auth/register', () => {
-  //     return request(app.getHttpServer())
-  //       .post('/auth/register')
-  //       .send({
-  //         email: 'root@email.local',
-  //         password: 'sesame',
-  //         name: 'Root',
-  //         nick: 'root',
-  //       })
-  //       .expect(HttpStatus.CREATED);
-  //   });
+  it('GET /auth/register', () => {
+    return request(app.getHttpServer())
+      .post('/auth/register')
+      .send({
+        email: rootUser.email,
+        password: rootUser.password,
+        name: rootUser.name,
+        nick: rootUser.nick,
+      })
+      .expect(HttpStatus.CREATED);
+  });
 });

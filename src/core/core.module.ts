@@ -5,19 +5,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { configOptions } from '../config';
 import { databaseConfigLoader } from './application/config/loaders/database.config.loader';
-import { MongooseFactory } from './infrastructure/factories/mongoose.factory';
+import { MongooseFactory } from '../database/factories/mongoose.factory';
 import { HttpExceptionFilter } from './infrastructure/filters/exception.filter';
 import { TransformInterceptor } from './infrastructure/interceptors/transform.interceptor';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot(configOptions),
-    MongooseModule.forRootAsync({
-      imports: [ConfigModule.forFeature(databaseConfigLoader)],
-      inject: [ConfigService],
-      useClass: MongooseFactory,
-    }),
-  ],
+  imports: [ConfigModule.forRoot(configOptions)],
   providers: [
     {
       provide: APP_FILTER,

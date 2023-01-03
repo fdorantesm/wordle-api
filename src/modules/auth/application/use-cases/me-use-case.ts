@@ -12,7 +12,6 @@ export class MeUseCase {
     const user = await this.commandBus.execute<FindUserCommand, UserEntity>(
       new FindUserCommand({ uuid: userId }),
     );
-    console.log({ user });
     return user;
   }
 }
