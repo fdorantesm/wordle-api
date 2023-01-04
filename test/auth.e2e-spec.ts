@@ -9,12 +9,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UsersService } from 'src/modules/users/infrastructure/database/services/users.service';
 import { Scope } from 'src/modules/users/domain/enums/scope.enum';
 import { CoreModule } from 'src/core/core.module';
-import { MongooseMemoryFactory } from 'src/database/factories/mongoose-memory.factory';
 
 describe('AuthController (e2e)', () => {
   let app: INestApplication;
   let moduleFixture: TestingModule;
   let usersService: UsersService;
+
+  let mongod: MongoMemoryServer;
 
   const rootUser = {
     email: 'root@email.local',
@@ -25,14 +26,14 @@ describe('AuthController (e2e)', () => {
   };
 
   beforeEach(async () => {
+    mongod = await MongoMemoryServer.create();
+
     moduleFixture = await Test.createTestingModule({
       imports: [
         CoreModule,
         AuthModule,
         UsersModule,
-        MongooseModule.forRootAsync({
-          useClass: MongooseMemoryFactory,
-        }),
+        MongooseModule.forRoot(mongod.getUri()),
       ],
     }).compile();
 
@@ -40,6 +41,12 @@ describe('AuthController (e2e)', () => {
     await app.init();
 
     usersService = app.get(UsersService);
+  });
+
+  afterEach(async () => {
+    await app.close();
+    await moduleFixture.close();
+    await mongod.stop();
   });
 
   it('POST /auth/login', async () => {
