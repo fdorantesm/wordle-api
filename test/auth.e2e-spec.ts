@@ -13,6 +13,7 @@ import { MongooseMemoryFactory } from 'src/database/factories/mongoose-memory.fa
 
 describe('AuthController (e2e)', () => {
   let app: INestApplication;
+  let moduleFixture: TestingModule;
   let usersService: UsersService;
 
   const rootUser = {
@@ -24,7 +25,7 @@ describe('AuthController (e2e)', () => {
   };
 
   beforeEach(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
+    moduleFixture = await Test.createTestingModule({
       imports: [
         CoreModule,
         AuthModule,
@@ -41,20 +42,19 @@ describe('AuthController (e2e)', () => {
     usersService = app.get(UsersService);
   });
 
-  it('GET /auth/login', async () => {
+  it('POST /auth/login', async () => {
     await usersService.register(
       rootUser.email,
       rootUser.password,
       rootUser.scopes,
     );
 
-    return request(app.getHttpServer())
-      .post('/auth/login')
-      .send({
-        email: rootUser.email,
-        password: rootUser.password,
-      })
-      .expect(HttpStatus.CREATED);
+    const login = await request(app.getHttpServer()).post('/auth/login').send({
+      email: rootUser.email,
+      password: rootUser.password,
+    });
+
+    expect(login.statusCode).toBe(HttpStatus.CREATED);
   });
 
   it('GET /auth/me', async () => {
@@ -76,15 +76,16 @@ describe('AuthController (e2e)', () => {
     expect(me.statusCode).toBe(HttpStatus.OK);
   });
 
-  it('GET /auth/register', () => {
-    return request(app.getHttpServer())
+  it('POST /auth/register', async () => {
+    const register = await request(app.getHttpServer())
       .post('/auth/register')
       .send({
         email: rootUser.email,
         password: rootUser.password,
         name: rootUser.name,
         nick: rootUser.nick,
-      })
-      .expect(HttpStatus.CREATED);
+      });
+
+    expect(register.statusCode).toBe(HttpStatus.CREATED);
   });
 });
